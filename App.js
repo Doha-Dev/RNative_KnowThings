@@ -7,10 +7,18 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text } from 'react-native';
+import { Dimensions, Platform, StyleSheet, View, Text, TouchableHighlightBase } from 'react-native';
 import Supertext from './src/utils/supertext';
 
 class App extends Component {
+  functionA = () => {
+    if (Dimensions.get('window').fontScale === 1) {
+      console.warn('Good')
+    } else {
+      console.warn('Error!! The fontscale must be 1')
+    }
+  }
+
   checkSupport = () => {
     if (Platform.OS === 'ios') {
       if (Platform.Version < 14.4) {
@@ -25,9 +33,12 @@ class App extends Component {
   }
 
   render () {
-    console.warn(Platform.Version)
+    // console.warn(Platform.Version)
+    console.warn(Dimensions.get('screen'))
+    console.warn(Dimensions.get('window'))
     return (
       <View style={styles.container}>
+        {this.functionA()}
         {
           this.checkSupport() ?
             <Supertext
