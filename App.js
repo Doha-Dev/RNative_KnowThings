@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Platform, StyleSheet, View, Text, TouchableHighlightBase } from 'react-native';
 import Supertext from './src/utils/supertext';
+import DeviceInfo from 'react-native-device-info';
 
 class App extends Component {
   functionA = () => {
@@ -34,8 +35,10 @@ class App extends Component {
 
   render () {
     // console.warn(Platform.Version)
-    console.warn(Dimensions.get('screen'))
-    console.warn(Dimensions.get('window'))
+    // console.warn(Dimensions.get('screen'))
+    // console.warn(Dimensions.get('window'))
+    console.warn(DeviceInfo.getBrand())
+    console.warn(DeviceInfo.isTablet())
     return (
       <View style={styles.container}>
         {this.functionA()}
