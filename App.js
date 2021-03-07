@@ -7,18 +7,46 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { Platform, StyleSheet, View, Text } from 'react-native';
 import Supertext from './src/utils/supertext';
 
 class App extends Component {
+  checkSupport = () => {
+    if (Platform.OS === 'ios') {
+      if (Platform.Version < 14.4) {
+        return false
+      }
+    } else {
+      if (Platform.Version < 27) {
+        return false
+      }
+    }
+    return true
+  }
+
   render () {
+    console.warn(Platform.Version)
     return (
       <View style={styles.container}>
-        <Supertext
-          style={{backgroundColor: 'red'}}
-        >
-          This is my template!!
-        </Supertext>
+        {
+          this.checkSupport() ?
+            <Supertext
+              style={styles.div}
+            >
+              {/* This is my template!! */}
+              {
+                Platform.OS === 'ios' ?
+                  'This is my iOS Phone'
+                :
+                  'This is my Android Phone'
+              }
+            </Supertext>
+          :
+            <Text>
+              Sorry, Your phone is not being supported by the app.
+            </Text>
+        }
+        
       </View>
     )
   }
@@ -30,6 +58,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#bbb',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  div: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: 'yellow'
+      },
+      android: {
+        backgroundColor: 'red'
+      },
+    })
   },
 });
 
